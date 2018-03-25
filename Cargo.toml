@@ -1,0 +1,10 @@
+[package]
+name = "wacky"
+version = "0.1.0"
+authors = ["liam <ldi30@uclive.ac.nz>"]
+
+[dependencies]
+
+[dependencies.mat91lib]
+version = "*"
+git = "https://github.com/liamdiprose/mat91lib-rust.git"
