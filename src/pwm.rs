@@ -1,14 +1,15 @@
 
 use mat91lib as mt91;
+use ::Pio;
 
 pub struct Pwm {
     pwm: mt91::pwm_t
 }
 
 impl Pwm {
-    pub fn new(pio: u32, frequency: u32, duty: u32, invert: bool) -> Result<Self, ()> {
+    pub fn new(pio: Pio, frequency: u32, duty: u32, invert: bool) -> Result<Self, ()> {
         let mut cfg = mt91::pwm_cfg_t {
-            pio,
+            pio: pio as u32,
             period: frequency,
             duty: 0,
             align: mt91::pwm_align_t_PWM_ALIGN_LEFT,

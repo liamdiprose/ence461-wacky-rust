@@ -1,15 +1,17 @@
 use mat91lib as mt91;
+use ::Pio;
+use ::core::mem::size_of_val;
 
 pub struct Spi {
     spi: mt91::spi_t
 }
 
 impl Spi {
-    pub fn new (cs_pio: Pio, mode: spi_mode, clock_speed_khz: usize, bits: u8) -> Result<(), ()> {
-        let mut cfg = spi_cfg_t {
+    pub fn new (cs_pio: Pio, mode: mt91::spi_mode_t, clock_speed_khz: u32, bits: u8) -> Result<Self, ()> {
+        let cfg = mt91::spi_cfg_t {
             channel: 0,
             clock_speed_kHz: clock_speed_khz,
-            cs: cs_pio,
+            cs: cs_pio as u32,
             mode,
             cs_mode: mode,
             bits
@@ -23,16 +25,22 @@ impl Spi {
         }
     }
 
-    pub fn transact (&self, buff: &[u8]) {
-        mt91::spi_transact(self.spi, &buff, buff.len())
+    pub fn transact (&self, buff: &mut mt91::spi_transfer_t) {
+        unsafe {
+            mt91::spi_transact(self.spi, buff, size_of_val(buff) as u8);
+        }
     }
 
-    pub fn transfer (&self, tx: &[u8], rx: &[u8], terminate: bool) {
-        mt91::spi_transfer(self.spi, tx, rx, tx.len(), terminate)
+    pub fn transfer (&self, tx: &mut usize, rx: &mut usize, terminate: bool) {
+        unsafe {
+            mt91::spi_transfer(self.spi, tx, rx, size_of_val(tx) as u16, terminate as u8);
+        }
     }
 
     pub fn shutdown (&self) {
-        mt91::spi_shutdown(self.spi)
+        unsafe {
+            mt91::spi_shutdown(self.spi)
+        }
     }
 }
 
