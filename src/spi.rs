@@ -1,6 +1,6 @@
 use mat91lib as mt91;
 
-struct Spi {
+pub struct Spi {
     spi: mt91::spi_t
 }
 
@@ -32,7 +32,7 @@ impl Spi {
     }
 
     pub fn shutdown (&self) {
-        mat91::spi_shutdown(self.spi)
+        mt91::spi_shutdown(self.spi)
     }
 }
 
