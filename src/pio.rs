@@ -5,6 +5,7 @@ use mat91lib as mt91;
 
 #[repr(u32)]
 pub enum Pio {
-    A0 = mt91::PIO_AIMDR_P0
+    A0 = mt91::PIO_AIMDR_P0,
+    A1 = mt91::PIO_AIMDR_P1
 }
 

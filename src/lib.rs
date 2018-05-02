@@ -14,3 +14,7 @@ pub use spi::Spi;
 pub use twi::Twi;
 
 pub use pio::Pio;
+
+pub mod peripherals {
+    const TIMER1: u32 = 2;
+}
