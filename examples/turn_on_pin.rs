@@ -11,9 +11,8 @@ use ::core::fmt::Arguments;
 
 
 pub fn main() {
-    let _led = Pwm::new(Pio::A0, 100, 10, false).unwrap();
-
-    led.set_high();
+    let led = Pio::A0;
+    led.set_output(wacky::pio::LogicLevel::High).unwrap();
 }
 
 type PanicLocation = (&'static str, u32);
